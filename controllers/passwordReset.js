@@ -20,7 +20,7 @@ class passwordReset {
 
         res.send({
           status: "success",
-          message: "Password reset email sent...Please check your email",
+          message: "Password reset token and id sent in console.",
         });
       } else {
         res.send({ status: "failed", message: "Email doesn't exist" });
