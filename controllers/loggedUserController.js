@@ -1,11 +1,19 @@
-// import UserModel from "../models/user.js";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-
-class loggedUserController {
+class LoggedUserController {
   static loggedUser = async (req, res) => {
-    res.send({ user: req.user });
+    try {
+      if (!req.user) {
+        return res.status(401).json({ status: "failed", message: "User not authenticated" });
+      }
+
+      return res.status(200).json({
+        status: "success",
+        user: req.user,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ status: "failed", message: "An error occurred" });
+    }
   };
 }
 
-export default loggedUserController;
+export default LoggedUserController;
