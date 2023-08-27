@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Defining Schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -17,13 +16,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  tc: {
-    type: Boolean,
-    required: true,
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
   },
 });
 
-// Model
 const UserModel = mongoose.model("user", userSchema);
 
 export default UserModel;
