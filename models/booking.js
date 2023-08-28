@@ -26,7 +26,7 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
     vehicleType: {
-      type: String, // You can define specific vehicle types here
+      type: String, 
       required: true,
     },
   },

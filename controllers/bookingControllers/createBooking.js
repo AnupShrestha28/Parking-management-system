@@ -50,7 +50,7 @@ export const createBooking = async (req, res) => {
       startTime,
       endTime,
       paymentStatus,
-      vehicleType, // Include the vehicleType field
+      vehicleType, 
     });
 
     await newBooking.save();
