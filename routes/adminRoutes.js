@@ -44,7 +44,6 @@ router.delete(
 );
 
 // Get all parking slots
-router.get("/get-all-parking-slots",adminAuthMiddleware, getAllParkingSlots);
-
+router.get("/get-all-parking-slots", adminAuthMiddleware, getAllParkingSlots);
 
 export default router;

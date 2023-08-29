@@ -29,6 +29,7 @@ class LoginController {
         status: "success",
         message: "Login successful",
         token: token,
+        userID: user._id, 
       });
     } catch (error) {
       console.error(error);

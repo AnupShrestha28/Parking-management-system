@@ -1,9 +1,8 @@
 import Booking from "../../models/booking.js";
 import User from "../../models/user.js";
 import ParkingSlot from "../../models/parkingSlots.js";
-import ParkingLocation from "../../models/parkingLocation.js"; 
+import ParkingLocation from "../../models/parkingLocation.js";
 import mongoose from "mongoose";
-
 
 export const createBooking = async (req, res) => {
   try {
@@ -60,6 +59,10 @@ export const createBooking = async (req, res) => {
         message: "This parking slot has already been booked for the selected time range",
       });
     }
+
+    // Update the isBooked property of the parking slot
+    parkingSlot.isBooked = true;
+    await parkingSlot.save();
 
     // Update the bookedSlots and totalSlots of the associated parking location
     const parkingLocation = await ParkingLocation.findById(parkingSlot.location);

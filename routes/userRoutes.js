@@ -10,6 +10,7 @@ import { getAllParking } from "../controllers/parkingLocationControllers/getAllP
 import { getAvailableParking } from "../controllers/parkingLocationControllers/getAvailableParking.js";
 import { getAllParkingSlots } from "../controllers/parkingSlotControllers/getAllParkingSlots.js";
 import { createBooking } from "../controllers/bookingControllers/createBooking.js";
+import { getUserBooking } from "../controllers/bookingControllers/getUserBooking.js";
 import checkUserAuth from "../middlewares/userAuth.js";
 
 // Route level middleware - to protect route
@@ -44,5 +45,8 @@ router.get("/get-all-parking-slots", checkUserAuth, getAllParkingSlots);
 
 // Booking
 router.post("/create-booking", checkUserAuth, createBooking);
+
+// Get Booking details for a user
+router.get("/user/bookings", checkUserAuth, getUserBooking);
 
 export default router;

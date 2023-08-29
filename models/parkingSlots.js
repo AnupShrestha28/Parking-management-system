@@ -12,8 +12,12 @@ const parkingSlotSchema = new mongoose.Schema(
     },
     location: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ParkingLocation", 
+      ref: "ParkingLocation",
       required: true,
+    },
+    isBooked: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
