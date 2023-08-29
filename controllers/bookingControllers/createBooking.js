@@ -1,7 +1,9 @@
 import Booking from "../../models/booking.js";
 import User from "../../models/user.js";
 import ParkingSlot from "../../models/parkingSlots.js";
+import ParkingLocation from "../../models/parkingLocation.js"; 
 import mongoose from "mongoose";
+
 
 export const createBooking = async (req, res) => {
   try {
@@ -43,6 +45,30 @@ export const createBooking = async (req, res) => {
       });
     }
 
+    // Check if the selected parking slot is already booked within the specified time range
+    const existingBooking = await Booking.findOne({
+      parkingSlot: parkingSlotId,
+      $or: [
+        { startTime: { $lte: startTime }, endTime: { $gte: startTime } },
+        { startTime: { $lte: endTime }, endTime: { $gte: endTime } },
+      ],
+    });
+
+    if (existingBooking) {
+      return res.status(409).json({
+        status: "failed",
+        message: "This parking slot has already been booked for the selected time range",
+      });
+    }
+
+    // Update the bookedSlots and totalSlots of the associated parking location
+    const parkingLocation = await ParkingLocation.findById(parkingSlot.location);
+    if (parkingLocation) {
+      parkingLocation.bookedSlots += 1;
+      parkingLocation.totalSlots -= 1;
+      await parkingLocation.save();
+    }
+
     // Create a new booking with the populated user, parkingSlot, and vehicleType fields
     const newBooking = new Booking({
       user: userId,
@@ -50,7 +76,7 @@ export const createBooking = async (req, res) => {
       startTime,
       endTime,
       paymentStatus,
-      vehicleType, 
+      vehicleType,
     });
 
     await newBooking.save();
