@@ -46,14 +46,18 @@ export const adminRegister = async (req, res) => {
     await adminUser.save();
 
     // Generate a token for the registered admin user
-    const token = jwt.sign({ userID: adminUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h", 
-    });
+    const token = jwt.sign(
+      { userID: adminUser._id },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     return res.status(201).json({
       status: "success",
       message: "Admin registered successfully",
-      token: token, 
+      token: token,
     });
   } catch (error) {
     console.error(error);

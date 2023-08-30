@@ -15,7 +15,9 @@ export const getAllParkingSlots = async (req, res) => {
     });
 
     // Create an array of booked parking slot IDs from active bookings
-    const bookedSlotIds = activeBookings.map((booking) => booking.parkingSlot.toString());
+    const bookedSlotIds = activeBookings.map((booking) =>
+      booking.parkingSlot.toString()
+    );
 
     // Fetch the parking locations for all parking slots
     const parkingSlotsWithLocations = await Promise.all(

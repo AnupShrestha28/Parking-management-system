@@ -29,7 +29,7 @@ const adminAuthMiddleWare = async (req, res, next) => {
       if (!user || user.role !== "admin") {
         return res.status(401).json({
           status: "failed",
-          message: "Unauthorized: Admin not found",
+          message: "Unauthorized: Admin not found or not authorized",
         });
       }
 

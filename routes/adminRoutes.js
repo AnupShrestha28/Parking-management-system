@@ -10,7 +10,7 @@ import { createParkingSlot } from "../controllers/parkingSlotControllers/createP
 import { editParkingSlot } from "../controllers/parkingSlotControllers/editParkingSlot.js";
 import { deleteParkingSlot } from "../controllers/parkingSlotControllers/deleteParkingSlot.js";
 import { getAllParkingSlots } from "../controllers/parkingSlotControllers/getAllParkingSlots.js";
-import adminAuthMiddleware from "../middlewares/adminAuth.js";
+import adminAuthMiddleware from "../middleware/adminAuth.js";
 
 import { adminRegister } from "../controllers/adminControllers/adminRegister.js";
 import { adminLogin } from "../controllers/adminControllers/adminLogin.js";

@@ -11,7 +11,7 @@ import { getAvailableParking } from "../controllers/parkingLocationControllers/g
 import { getAllParkingSlots } from "../controllers/parkingSlotControllers/getAllParkingSlots.js";
 import { createBooking } from "../controllers/bookingControllers/createBooking.js";
 import { getUserBooking } from "../controllers/bookingControllers/getUserBooking.js";
-import checkUserAuth from "../middlewares/userAuth.js";
+import checkUserAuth from "../middleware/userAuth.js";
 
 // Route level middleware - to protect route
 router.use("/changePassword", checkUserAuth);

@@ -30,11 +30,9 @@ export const getAvailableParking = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({
-        status: "failed",
-        message: "Unable to retrieve available parking",
-      });
+    res.status(500).json({
+      status: "failed",
+      message: "Unable to retrieve available parking",
+    });
   }
 };

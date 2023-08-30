@@ -6,7 +6,14 @@ import mongoose from "mongoose";
 
 export const createBooking = async (req, res) => {
   try {
-    const { userId, parkingSlotId, startTime, endTime, paymentStatus, vehicleType } = req.body;
+    const {
+      userId,
+      parkingSlotId,
+      startTime,
+      endTime,
+      paymentStatus,
+      vehicleType,
+    } = req.body;
 
     // Check if the provided userId is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -56,7 +63,8 @@ export const createBooking = async (req, res) => {
     if (existingBooking) {
       return res.status(409).json({
         status: "failed",
-        message: "This parking slot has already been booked for the selected time range",
+        message:
+          "This parking slot has already been booked for the selected time range",
       });
     }
 
@@ -65,7 +73,9 @@ export const createBooking = async (req, res) => {
     await parkingSlot.save();
 
     // Update the bookedSlots and totalSlots of the associated parking location
-    const parkingLocation = await ParkingLocation.findById(parkingSlot.location);
+    const parkingLocation = await ParkingLocation.findById(
+      parkingSlot.location
+    );
     if (parkingLocation) {
       parkingLocation.bookedSlots += 1;
       parkingLocation.totalSlots -= 1;

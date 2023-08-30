@@ -30,12 +30,10 @@ class PasswordReset {
       });
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({
-          status: "failed",
-          message: "Unable to send password reset email",
-        });
+      res.status(500).json({
+        status: "failed",
+        message: "Unable to send password reset email",
+      });
     }
   };
 
@@ -84,12 +82,10 @@ class PasswordReset {
           .status(400)
           .json({ status: "failed", message: "Token has expired" });
       } else {
-        res
-          .status(400)
-          .json({
-            status: "failed",
-            message: "Invalid token or password reset failed",
-          });
+        res.status(400).json({
+          status: "failed",
+          message: "Invalid token or password reset failed",
+        });
       }
     }
   };

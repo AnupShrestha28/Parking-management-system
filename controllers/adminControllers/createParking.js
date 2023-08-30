@@ -23,14 +23,16 @@ export const createParking = async (req, res) => {
     if (!totalFloors) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the total number of floors for the parking location",
+        message:
+          "Please provide the total number of floors for the parking location",
       });
     }
 
     if (!totalSlots) {
       return res.status(400).json({
         status: "failed",
-        message: "Please provide the total number of slots for the parking location",
+        message:
+          "Please provide the total number of slots for the parking location",
       });
     }
 
