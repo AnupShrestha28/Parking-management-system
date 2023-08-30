@@ -39,6 +39,51 @@ export const createParkingSlot = async (req, res) => {
       });
     }
 
+    // Check if a parking slot with the same slot number already exists
+    const existingSlot = await ParkingSlot.findOne({
+      slotNumber: slotNumber,
+      location: locationId,
+    });
+    if (existingSlot) {
+      return res.status(409).json({
+        status: "failed",
+        message:
+          "A parking slot with the same slot number already exists for this location",
+      });
+    }
+
+    // Check if the provided slot number exceeds the total number of slots
+    if (slotNumber > parkingLocation.totalSlots) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Slot number exceeds the total number of available slots",
+      });
+    }
+
+    // Check if the provided floor number exceeds the total number of floors
+    if (floorNumber > parkingLocation.totalFloors) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Floor number exceeds the total number of available floors",
+      });
+    }
+
+    // Check slot number constraints based on floor number
+    const maxSlotNumber = floorNumber === 1 ? 10 : floorNumber * 10;
+    if (slotNumber < (floorNumber - 1) * 10 + 1 || slotNumber > maxSlotNumber) {
+      const errorMessage =
+        floorNumber === 1
+          ? `Invalid slot number for floor ${floorNumber}. It must be between 1 and 10.`
+          : `Invalid slot number for floor ${floorNumber}. It must be between ${
+              (floorNumber - 1) * 10 + 1
+            } and ${maxSlotNumber}.`;
+
+      return res.status(400).json({
+        status: "failed",
+        message: errorMessage,
+      });
+    }
+
     // Create a new parking slot
     const newParkingSlot = new ParkingSlot({
       floorNumber,
