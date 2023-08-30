@@ -7,7 +7,9 @@ class ChangePassword {
       const { password, password_confirmation } = req.body;
 
       if (!password || !password_confirmation) {
-        return res.status(400).json({ status: "failed", message: "All fields are required" });
+        return res
+          .status(400)
+          .json({ status: "failed", message: "All fields are required" });
       }
 
       if (password !== password_confirmation) {
@@ -30,7 +32,9 @@ class ChangePassword {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ status: "failed", message: "Unable to change password" });
+      return res
+        .status(500)
+        .json({ status: "failed", message: "Unable to change password" });
     }
   };
 }

@@ -24,7 +24,7 @@ export const getAvailableParking = async (req, res) => {
         address: location.address,
         totalFloors: location.totalFloors,
         totalSlots: location.totalSlots,
-        bookedSlots: location.bookedSlots, 
+        bookedSlots: location.bookedSlots,
       },
       availableParking: availableParking,
     });
@@ -32,6 +32,9 @@ export const getAvailableParking = async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .json({ status: "failed", message: "Unable to retrieve available parking" });
+      .json({
+        status: "failed",
+        message: "Unable to retrieve available parking",
+      });
   }
 };

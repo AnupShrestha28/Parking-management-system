@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import connectDB from "./config/connectDB.js";
 import userRoutes from "./routes/userRoutes.js";
-import adminRoutes from "./routes/adminRoutes.js"; 
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Load Routes
 app.use("/api/user", userRoutes);
-app.use('/admin', adminRoutes);
+app.use("/admin", adminRoutes);
 
 connectDB()
   .then(() => {

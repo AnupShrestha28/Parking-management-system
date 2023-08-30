@@ -2,7 +2,9 @@ class LoggedUserController {
   static loggedUser = async (req, res) => {
     try {
       if (!req.user) {
-        return res.status(401).json({ status: "failed", message: "User not authenticated" });
+        return res
+          .status(401)
+          .json({ status: "failed", message: "User not authenticated" });
       }
 
       return res.status(200).json({
@@ -11,7 +13,9 @@ class LoggedUserController {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ status: "failed", message: "An error occurred" });
+      return res
+        .status(500)
+        .json({ status: "failed", message: "An error occurred" });
     }
   };
 }

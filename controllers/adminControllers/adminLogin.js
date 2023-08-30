@@ -10,7 +10,7 @@ export const adminLogin = async (req, res) => {
     if (!admin) {
       return res.status(401).json({
         status: "failed",
-        message: "This email is not registered", 
+        message: "This email is not registered as an admin",
       });
     }
 
@@ -32,6 +32,7 @@ export const adminLogin = async (req, res) => {
       status: "success",
       message: "Admin login successful",
       token,
+      adminID: admin._id, 
     });
   } catch (error) {
     console.error(error);

@@ -7,17 +7,21 @@ class PasswordReset {
     try {
       const { email } = req.body;
       if (!email) {
-        return res.status(400).json({ status: "failed", message: "Email field is required" });
+        return res
+          .status(400)
+          .json({ status: "failed", message: "Email field is required" });
       }
 
       const user = await UserModel.findOne({ email: email });
       if (!user) {
-        return res.status(404).json({ status: "failed", message: "Email doesn't exist" });
+        return res
+          .status(404)
+          .json({ status: "failed", message: "Email doesn't exist" });
       }
 
       const secret = user._id + process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ userID: user._id }, secret, { expiresIn: "1h" });
-      const link = `${getResetLink(user._id, token)}`; 
+      const link = `${getResetLink(user._id, token)}`;
 
       console.log(link);
       res.status(200).json({
@@ -26,7 +30,12 @@ class PasswordReset {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ status: "failed", message: "Unable to send password reset email" });
+      res
+        .status(500)
+        .json({
+          status: "failed",
+          message: "Unable to send password reset email",
+        });
     }
   };
 
@@ -37,14 +46,18 @@ class PasswordReset {
       const user = await UserModel.findById(id);
 
       if (!user) {
-        return res.status(404).json({ status: "failed", message: "User not found" });
+        return res
+          .status(404)
+          .json({ status: "failed", message: "User not found" });
       }
 
       const new_secret = user._id + process.env.JWT_SECRET_KEY;
       jwt.verify(token, new_secret);
 
       if (!password || !password_confirmation) {
-        return res.status(400).json({ status: "failed", message: "All fields are required" });
+        return res
+          .status(400)
+          .json({ status: "failed", message: "All fields are required" });
       }
 
       if (password !== password_confirmation) {
@@ -57,7 +70,9 @@ class PasswordReset {
       const salt = await bcrypt.genSalt(10);
       const newHashPassword = await bcrypt.hash(password, salt);
 
-      await UserModel.findByIdAndUpdate(user._id, { $set: { password: newHashPassword } });
+      await UserModel.findByIdAndUpdate(user._id, {
+        $set: { password: newHashPassword },
+      });
       res.status(200).json({
         status: "success",
         message: "Password reset successfully",
@@ -65,9 +80,16 @@ class PasswordReset {
     } catch (error) {
       console.error(error);
       if (error.name === "TokenExpiredError") {
-        res.status(400).json({ status: "failed", message: "Token has expired" });
+        res
+          .status(400)
+          .json({ status: "failed", message: "Token has expired" });
       } else {
-        res.status(400).json({ status: "failed", message: "Invalid token or password reset failed" });
+        res
+          .status(400)
+          .json({
+            status: "failed",
+            message: "Invalid token or password reset failed",
+          });
       }
     }
   };

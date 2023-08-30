@@ -1,7 +1,7 @@
 import UserModel from "../../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import validator from "validator"; 
+import validator from "validator";
 
 class RegisterController {
   static userRegistration = async (req, res) => {
@@ -10,21 +10,26 @@ class RegisterController {
 
       // Validate email format
       if (!validator.isEmail(email)) {
-        return res.status(400).json({ status: "failed", message: "Invalid email format" });
+        return res
+          .status(400)
+          .json({ status: "failed", message: "Invalid email format" });
       }
 
       // Validate password strength
       if (!validator.isStrongPassword(password)) {
         return res.status(400).json({
           status: "failed",
-          message: "Password must be at least 8 characters long and contain a mix of uppercase, lowercase, digits, and special characters",
+          message:
+            "Password must be at least 8 characters long and contain a mix of uppercase, lowercase, digits, and special characters",
         });
       }
 
       const user = await UserModel.findOne({ email: email });
 
       if (user) {
-        return res.status(409).json({ status: "failed", message: "Email already exists" });
+        return res
+          .status(409)
+          .json({ status: "failed", message: "Email already exists" });
       }
 
       if (password !== password_confirmation) {
@@ -47,9 +52,13 @@ class RegisterController {
 
       const savedUser = await UserModel.findOne({ email: email });
 
-      const token = jwt.sign({ userID: savedUser._id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "1h", 
-      });
+      const token = jwt.sign(
+        { userID: savedUser._id },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
 
       return res.status(201).json({
         status: "success",
@@ -58,7 +67,9 @@ class RegisterController {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ status: "failed", message: "Unable to register" });
+      return res
+        .status(500)
+        .json({ status: "failed", message: "Unable to register" });
     }
   };
 }

@@ -21,6 +21,13 @@ export const getAllParkingSlots = async (req, res) => {
       (slot) => !bookedSlotIds.includes(slot._id.toString())
     );
 
+    if (availableParkingSlots.length === 0) {
+      return res.status(404).json({
+        status: "success",
+        message: "No available parking slots",
+      });
+    }
+
     res.status(200).json({
       status: "success",
       message: "Available parking slots retrieved successfully",

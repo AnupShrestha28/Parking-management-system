@@ -22,7 +22,9 @@ const adminAuthMiddleWare = async (req, res, next) => {
       }
 
       // Fetch the user from the database using the user ID in the token
-      const user = await UserModel.findById(decodedToken.userID).select("-password");
+      const user = await UserModel.findById(decodedToken.userID).select(
+        "-password"
+      );
 
       if (!user || user.role !== "admin") {
         return res.status(401).json({
